@@ -1,53 +1,81 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
 <meta charset="UTF-8">
-<title>Happy Birthday Mum</title>
+<title>Для мамы ❤️</title>
 
 <style>
 
 body{
-font-family: Arial;
-background: linear-gradient(135deg,#ff9a9e,#fad0c4);
-text-align:center;
-color:white;
 margin:0;
-height:100vh;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
+overflow:hidden;
+font-family:Arial;
+background:black;
+color:white;
+text-align:center;
 }
+
+/* матрица */
+canvas{
+position:fixed;
+top:0;
+left:0;
+z-index:-1;
+}
+
+/* отсчет */
 
 #count{
-font-size:100px;
+font-size:120px;
+margin-top:20vh;
 }
+
+/* сердце */
 
 #heart{
-font-size:80px;
+font-size:120px;
 display:none;
+animation:pulse 1s infinite;
 }
 
-#title{
+@keyframes pulse{
+0%{transform:scale(1)}
+50%{transform:scale(1.2)}
+100%{transform:scale(1)}
+}
+
+/* текст */
+
+#text{
+display:none;
 font-size:40px;
+margin-top:20px;
+animation:fly 2s ease;
+}
+
+@keyframes fly{
+from{
+transform:translateY(100px);
+opacity:0;
+}
+to{
+transform:translateY(0);
+opacity:1;
+}
+}
+
+/* галерея */
+
+#gallery{
 display:none;
-margin-bottom:20px;
+margin-top:30px;
 }
 
-.gallery{
-display:none;
-}
-
-.gallery img{
-width:300px;
-border-radius:15px;
-}
-
-button{
-padding:10px 20px;
-margin:5px;
-border:none;
-border-radius:10px;
+#gallery img{
+width:600px;
+max-width:90%;
+border-radius:20px;
+box-shadow:0 0 20px pink;
 }
 
 </style>
@@ -56,61 +84,143 @@ border-radius:10px;
 
 <body>
 
+<canvas id="matrix"></canvas>
+
 <div id="count">3</div>
 
 <div id="heart">❤️</div>
 
-<div id="title">Happy birthday, my mum 🥳</div>
+<div id="text">
+С днем рождения, мамуля ❤️!<br>
+Люблю тебя!
+</div>
 
-<div class="gallery">
+<div id="gallery">
 <img id="photo" src="photo1.jpg">
-<br>
-<button onclick="prev()">←</button>
-<button onclick="next()">→</button>
 </div>
 
 <script>
 
-let count=3
+/* MATRIX EFFECT */
 
-let timer=setInterval(()=>{
-count--
-document.getElementById("count").innerText=count
+let canvas=document.getElementById("matrix")
+let ctx=canvas.getContext("2d")
 
-if(count==0){
-clearInterval(timer)
+canvas.height=window.innerHeight
+canvas.width=window.innerWidth
 
-document.getElementById("count").style.display="none"
-document.getElementById("heart").style.display="block"
-document.getElementById("title").style.display="block"
-document.querySelector(".gallery").style.display="block"
+let letters="01"
+letters=letters.split("")
+
+let fontSize=16
+let columns=canvas.width/fontSize
+
+let drops=[]
+
+for(let x=0;x<columns;x++)
+drops[x]=1
+
+function draw(){
+
+ctx.fillStyle="rgba(0,0,0,0.05)"
+ctx.fillRect(0,0,canvas.width,canvas.height)
+
+ctx.fillStyle="#0F0"
+ctx.font=fontSize+"px monospace"
+
+for(let i=0;i<drops.length;i++){
+
+let text=letters[Math.floor(Math.random()*letters.length)]
+
+ctx.fillText(text,i*fontSize,drops[i]*fontSize)
+
+if(drops[i]*fontSize>canvas.height && Math.random()>0.975)
+drops[i]=0
+
+drops[i]++
 
 }
 
-},1000)
+}
+
+let matrixInterval=setInterval(draw,33)
+
+/* COUNTDOWN */
+
+let count=3
+
+let counter=setInterval(()=>{
+
+count--
+
+document.getElementById("count").innerText=count
+
+if(count==0){
+
+clearInterval(counter)
+
+document.getElementById("count").style.display="none"
+
+clearInterval(matrixInterval)
+
+showHeart()
+
+}
+
+},1500)
+
+function showHeart(){
+
+let heart=document.getElementById("heart")
+
+heart.style.display="block"
+
+setTimeout(()=>{
+
+showText()
+
+},3000)
+
+}
+
+/* TEXT */
+
+function showText(){
+
+document.getElementById("text").style.display="block"
+
+setTimeout(()=>{
+
+showGallery()
+
+},3000)
+
+}
+
+/* GALLERY */
 
 let photos=[
 "photo1.jpg",
 "photo2.jpg",
-"photo3.jpg"
+"photo3.jpg",
 ]
 
 let index=0
 
-function show(){
-document.getElementById("photo").src=photos[index]
-}
+function showGallery(){
 
-function next(){
+document.getElementById("gallery").style.display="block"
+
+setInterval(()=>{
+
 index++
-if(index>=photos.length) index=0
-show()
-}
 
-function prev(){
-index--
-if(index<0) index=photos.length-1
-show()
+if(index>=photos.length) index=0
+
+document.getElementById("photo").src=photos[index]
+
+},4000)
+
 }
 
 </script>
