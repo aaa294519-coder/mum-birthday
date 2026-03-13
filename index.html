@@ -3,401 +3,215 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>С днём рождения, мамуля! ❤️</title>
+    <title>С днём рождения, мамуля!</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
+        
         body {
-            background: #ffe6f0;
+            background: #ffd9e6;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-family: 'Segoe UI', Arial, sans-serif;
-            padding: 15px;
+            font-family: 'Arial', sans-serif;
+            padding: 10px;
         }
-
-        .wrapper {
-            max-width: 1000px;
+        
+        .container {
+            max-width: 900px;
             width: 100%;
             background: white;
-            border-radius: 50px 50px 40px 40px;
-            padding: 30px 20px 40px;
-            box-shadow: 0 15px 30px rgba(255, 105, 180, 0.3);
+            border-radius: 60px;
+            padding: 25px;
             text-align: center;
+            box-shadow: 0 10px 30px #ff99bb;
         }
-
+        
         #binary {
-            font-size: 2.2rem;
-            font-weight: bold;
-            color: #d44c7a;
-            background: #fff0f5;
+            font-size: 2.5rem;
+            background: #ffe4f0;
             padding: 20px;
             border-radius: 50px;
             margin-bottom: 20px;
-            font-family: 'Courier New', monospace;
-            min-height: 90px;
+            font-family: monospace;
+            color: #cc3377;
         }
-
+        
         #countdown {
-            font-size: 5rem;
-            font-weight: 900;
-            color: #b03a66;
+            font-size: 6rem;
+            color: #ff4d7a;
             display: none;
-            margin: 10px 0;
+            margin: 20px 0;
         }
-
-        .heart-box {
-            display: none;
-            justify-content: center;
-            margin: 15px 0;
-        }
-
+        
         .heart {
-            background: #ffc0cb;
-            padding: 20px 35px;
-            border-radius: 80px;
-            font-size: 2.2rem;
-            font-weight: bold;
-            color: #b32d5e;
-            box-shadow: 0 0 0 8px white, 0 0 0 12px #ff99bb;
-            animation: pulse 1.4s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.15); }
-        }
-
-        .greeting {
-            font-size: 2.3rem;
-            font-weight: bold;
-            color: #c2185b;
-            background: #ffe4ec;
-            padding: 25px 15px;
-            border-radius: 60px;
-            margin: 25px 0;
             display: none;
-            border: 3px solid white;
+            font-size: 3rem;
+            background: #ffb3c6;
+            padding: 25px;
+            border-radius: 100px;
+            margin: 20px auto;
+            width: fit-content;
+            animation: beat 1s infinite;
+            color: white;
         }
-
+        
+        @keyframes beat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); background: #ff4d6d; }
+        }
+        
+        #message {
+            font-size: 2.2rem;
+            background: #ffc0cb;
+            color: white;
+            padding: 25px;
+            border-radius: 60px;
+            margin: 20px 0;
+            display: none;
+            text-shadow: 2px 2px 0 #ff6f9e;
+        }
+        
         .photos {
             display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
             justify-content: center;
-            margin: 30px 0 20px;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 30px 0;
         }
-
-        .photo {
-            flex: 1 1 250px;
-            max-width: 300px;
-            background: #ffdbeb;
-            padding: 15px;
-            border-radius: 40px 40px 20px 20px;
-        }
-
-        .photo img {
-            width: 100%;
-            height: 280px;
+        
+        .photos img {
+            width: 250px;
+            height: 300px;
             object-fit: cover;
-            border-radius: 30px;
-            border: 4px solid white;
-            display: block;
+            border-radius: 40px;
+            border: 5px solid white;
+            box-shadow: 0 5px 20px #ff99bb;
+            transition: 0.3s;
         }
-
-        .footer {
-            background: #ff9eb5;
-            color: white;
+        
+        .photos img:hover {
+            transform: scale(1.03);
+        }
+        
+        .love {
             font-size: 2rem;
-            padding: 15px 30px;
+            color: #ff2b6d;
+            background: white;
+            padding: 15px 40px;
             border-radius: 50px;
             display: inline-block;
-            margin-top: 15px;
+            border: 3px solid #ffb3c6;
         }
     </style>
 </head>
 <body>
-    <div class="wrapper">
-        <div id="binary">01 10 01 10</div>
+    <div class="container">
+        <div id="binary">0101 1010 0101</div>
         <div id="countdown"></div>
-        <div class="heart-box" id="heartBox">
-            <div class="heart">0 1 1 ♥ 0 1 0</div>
-        </div>
-        <div class="greeting" id="greeting">С днём рождения, мамуля ❤️! Люблю тебя!</div>
+        <div class="heart" id="heart">💗 0 1 0 1 💗</div>
+        <div id="message">С днём рождения, мамуля ❤️! Люблю тебя!</div>
+        
         <div class="photos">
-            <div class="photo"><img id="photo1" src="photo1.jpg" alt="фото1"></div>
-            <div class="photo"><img id="photo2" src="photo2.jpg" alt="фото2"></div>
-            <div class="photo"><img id="photo3" src="photo3.jpg" alt="фото3"></div>
+            <img id="photo1" src="photo1.jpg" alt="photo1" onerror="this.src='https://via.placeholder.com/250x300/ffb6c1/ffffff?text=Фото+1'">
+            <img id="photo2" src="photo2.jpg" alt="photo2" onerror="this.src='https://via.placeholder.com/250x300/ffb6c1/ffffff?text=Фото+2'">
+            <img id="photo3" src="photo3.jpg" alt="photo3" onerror="this.src='https://via.placeholder.com/250x300/ffb6c1/ffffff?text=Фото+3'">
         </div>
-        <div class="footer">❤️ мамуля ❤️</div>
+        
+        <div class="love">❤️ мамуля ❤️</div>
     </div>
 
     <script>
-        let step = 0;
-        const binaryDiv = document.getElementById('binary');
-        const countdownDiv = document.getElementById('countdown');
-        const heartBox = document.getElementById('heartBox');
-        const greeting = document.getElementById('greeting');
-        const photos = [
-            document.getElementById('photo1'),
-            document.getElementById('photo2'),
-            document.getElementById('photo3')
-        ];
-
-        const images = [
-            'photo1.jpg',
-            'photo2.jpg',
-            'photo3.jpg'
-        ];
-
-        // показываем бегущие 0 и 1
-        const binaryStream = setInterval(() => {
-            let text = '';
-            for (let i = 0; i < 12; i++) {
-                text += Math.random() > 0.5 ? '0' : '1';
-                if (i % 3 === 2) text += ' ';
-            }
-            binaryDiv.textContent = text;
-            step++;
-
-            if (step > 10) {
-                clearInterval(binaryStream);
-                binaryDiv.style.display = 'none';
-                startCountdown();
-            }
-        }, 200);
-
-        function startCountdown() {
-            countdownDiv.style.display = 'block';
-            let count = 3;
-            countdownDiv.textContent = count;
-
-            const timer = setInterval(() => {
-                count--;
-                if (count > 0) {
-                    countdownDiv.textContent = count;
-                } else {
-                    clearInterval(timer);
-                    countdownDiv.style.display = 'none';
-                    heartBox.style.display = 'flex';
-
-                    setTimeout(() => {
-                        heartBox.style.display = 'none';
-                        greeting.style.display = 'block';
-                        startPhotoRotation();
-                    }, 3500);
+        // Ждём полной загрузки страницы
+        window.onload = function() {
+            const binary = document.getElementById('binary');
+            const countdown = document.getElementById('countdown');
+            const heart = document.getElementById('heart');
+            const message = document.getElementById('message');
+            const photos = [
+                document.getElementById('photo1'),
+                document.getElementById('photo2'),
+                document.getElementById('photo3')
+            ];
+            
+            // Набор фото для смены
+            const photoList = [
+                'photo1.jpg',
+                'photo2.jpg', 
+                'photo3.jpg'
+            ];
+            
+            let binaryCount = 0;
+            
+            // 1. Текут 0 и 1
+            const binaryTimer = setInterval(() => {
+                let str = '';
+                for(let i = 0; i < 15; i++) {
+                    str += Math.random() < 0.5 ? '0' : '1';
                 }
-            }, 800);
-        }
-
-        function startPhotoRotation() {
-            let index = 0;
-            const updatePhotos = () => {
-                photos[0].src = images[index % 3];
-                photos[1].src = images[(index + 1) % 3];
-                photos[2].src = images[(index + 2) % 3];
-                index++;
-            };
-            updatePhotos();
-            setInterval(updatePhotos, 4000);
-        }
+                binary.textContent = str;
+                binaryCount++;
+                
+                // Через 2 секунды переходим к отсчёту
+                if(binaryCount > 10) {
+                    clearInterval(binaryTimer);
+                    binary.style.display = 'none';
+                    
+                    // 2. Обратный отсчёт
+                    countdown.style.display = 'block';
+                    let num = 3;
+                    countdown.textContent = num;
+                    
+                    const countTimer = setInterval(() => {
+                        num--;
+                        if(num > 0) {
+                            countdown.textContent = num;
+                        } else {
+                            clearInterval(countTimer);
+                            countdown.style.display = 'none';
+                            
+                            // 3. Показываем сердце
+                            heart.style.display = 'block';
+                            
+                            // 4. Через 3 секунды показываем поздравление и фото
+                            setTimeout(() => {
+                                heart.style.display = 'none';
+                                message.style.display = 'block';
+                                
+                                // Запускаем смену фото
+                                let photoIndex = 0;
+                                setInterval(() => {
+                                    photoIndex = (photoIndex + 1) % photoList.length;
+                                    
+                                    // Меняем все фото одновременно
+                                    photos[0].src = photoList[photoIndex] + '?t=' + Date.now();
+                                    photos[1].src = photoList[(photoIndex + 1) % photoList.length] + '?t=' + Date.now();
+                                    photos[2].src = photoList[(photoIndex + 2) % photoList.length] + '?t=' + Date.now();
+                                }, 4000);
+                                
+                            }, 3000);
+                        }
+                    }, 800);
+                }
+            }, 200);
+            
+            // Сразу запускаем смену фото (но они пока скрыты, но будут менятся когда появятся)
+            // Это чтобы они сразу начали меняться когда появятся
+            setTimeout(() => {
+                let idx = 0;
+                setInterval(() => {
+                    idx = (idx + 1) % photoList.length;
+                    // Обновляем фото с параметром чтобы избежать кэша на гитхабе
+                    photos[0].src = photoList[idx] + '?v=' + Date.now();
+                    photos[1].src = photoList[(idx + 1) % photoList.length] + '?v=' + Date.now();
+                    photos[2].src = photoList[(idx + 2) % photoList.length] + '?v=' + Date.now();
+                }, 4000);
+            }, 5000); // Запускаем через 5 секунд, когда фото уже видны
+        };
     </script>
-</body>
-</html>display:none;
-animation:pulse 1s infinite;
-}
-
-@keyframes pulse{
-0%{transform:scale(1)}
-50%{transform:scale(1.2)}
-100%{transform:scale(1)}
-}
-
-/* текст */
-
-#text{
-display:none;
-font-size:40px;
-margin-top:20px;
-animation:fly 2s ease;
-}
-
-@keyframes fly{
-from{
-transform:translateY(100px);
-opacity:0;
-}
-to{
-transform:translateY(0);
-opacity:1;
-}
-}
-
-/* галерея */
-
-#gallery{
-display:none;
-margin-top:30px;
-}
-
-#gallery img{
-width:600px;
-max-width:90%;
-border-radius:20px;
-box-shadow:0 0 20px pink;
-}
-
-</style>
-
-</head>
-
-<body>
-
-<canvas id="matrix"></canvas>
-
-<div id="count">3</div>
-
-<div id="heart">❤️</div>
-
-<div id="text">
-С днем рождения, мамуля ❤️!<br>
-Люблю тебя!
-</div>
-
-<div id="gallery">
-<img id="photo" src="photo1.jpg">
-</div>
-
-<script>
-
-/* MATRIX EFFECT */
-
-let canvas=document.getElementById("matrix")
-let ctx=canvas.getContext("2d")
-
-canvas.height=window.innerHeight
-canvas.width=window.innerWidth
-
-let letters="01"
-letters=letters.split("")
-
-let fontSize=16
-let columns=canvas.width/fontSize
-
-let drops=[]
-
-for(let x=0;x<columns;x++)
-drops[x]=1
-
-function draw(){
-
-ctx.fillStyle="rgba(0,0,0,0.05)"
-ctx.fillRect(0,0,canvas.width,canvas.height)
-
-ctx.fillStyle="#0F0"
-ctx.font=fontSize+"px monospace"
-
-for(let i=0;i<drops.length;i++){
-
-let text=letters[Math.floor(Math.random()*letters.length)]
-
-ctx.fillText(text,i*fontSize,drops[i]*fontSize)
-
-if(drops[i]*fontSize>canvas.height && Math.random()>0.975)
-drops[i]=0
-
-drops[i]++
-
-}
-
-}
-
-let matrixInterval=setInterval(draw,33)
-
-/* COUNTDOWN */
-
-let count=3
-
-let counter=setInterval(()=>{
-
-count--
-
-document.getElementById("count").innerText=count
-
-if(count==0){
-
-clearInterval(counter)
-
-document.getElementById("count").style.display="none"
-
-clearInterval(matrixInterval)
-
-showHeart()
-
-}
-
-},1500)
-
-function showHeart(){
-
-let heart=document.getElementById("heart")
-
-heart.style.display="block"
-
-setTimeout(()=>{
-
-showText()
-
-},3000)
-
-}
-
-/* TEXT */
-
-function showText(){
-
-document.getElementById("text").style.display="block"
-
-setTimeout(()=>{
-
-showGallery()
-
-},3000)
-
-}
-
-/* GALLERY */
-
-let photos=[
-"photo1.jpg",
-"photo2.jpg",
-"photo3.jpg",
-]
-
-let index=0
-
-function showGallery(){
-
-document.getElementById("gallery").style.display="block"
-
-setInterval(()=>{
-
-index++
-
-if(index>=photos.length) index=0
-
-document.getElementById("photo").src=photos[index]
-
-},4000)
-
-}
-
-</script>
-
 </body>
 </html>
