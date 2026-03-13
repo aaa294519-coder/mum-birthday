@@ -12,20 +12,40 @@ font-family:Arial;
 background:linear-gradient(135deg,#ff9ecf,#ff6aa6);
 overflow:hidden;
 text-align:center;
-color:white;
 }
 
-/* инструкция */
+/* текст */
 
 #hint{
 position:absolute;
 top:20%;
 width:100%;
 font-size:28px;
-text-shadow:0 4px 20px rgba(0,0,0,0.3);
+color:black;
 }
 
-/* коробка */
+#title{
+position:absolute;
+top:12%;
+width:100%;
+font-size:44px;
+font-weight:bold;
+color:black;
+display:none;
+}
+
+#love{
+position:absolute;
+top:45%;
+width:100%;
+font-size:60px;
+font-weight:bold;
+color:red;
+display:none;
+animation:pop 1s;
+}
+
+/* подарок */
 
 #gift{
 position:absolute;
@@ -45,30 +65,6 @@ animation:shake 2s infinite;
 100%{transform:translate(-50%,-50%) rotate(0)}
 }
 
-/* поздравление */
-
-#title{
-position:absolute;
-top:10%;
-width:100%;
-font-size:44px;
-font-weight:bold;
-display:none;
-animation:drop 1.5s ease;
-text-shadow:0 6px 25px rgba(0,0,0,0.4);
-}
-
-@keyframes drop{
-from{
-opacity:0;
-transform:translateY(-80px);
-}
-to{
-opacity:1;
-transform:translateY(0);
-}
-}
-
 /* фото */
 
 #photoBox{
@@ -80,8 +76,8 @@ display:none;
 }
 
 #photo{
-width:75vw;
-max-width:520px;
+width:70vw;
+max-width:500px;
 border-radius:20px;
 box-shadow:0 20px 50px rgba(0,0,0,0.4);
 animation:pop 1s;
@@ -121,8 +117,11 @@ pointer-events:none;
 <div id="gift">🎁</div>
 
 <div id="title">
-С днём рождения, мамуля ❤️!<br>
-Люблю тебя!
+С днём рождения, мамуля ❤️!
+</div>
+
+<div id="love">
+Люблю тебя ❤️❤️❤️
 </div>
 
 <div id="photoBox">
@@ -145,7 +144,7 @@ let confetti=[]
 
 function createConfetti(){
 
-for(let i=0;i<250;i++){
+for(let i=0;i<200;i++){
 
 confetti.push({
 x:Math.random()*canvas.width,
@@ -178,42 +177,7 @@ requestAnimationFrame(drawConfetti)
 
 }
 
-/* HEARTS */
-
-let hearts=[]
-
-function createHearts(){
-
-for(let i=0;i<80;i++){
-
-hearts.push({
-x:canvas.width/2,
-y:canvas.height/2,
-vx:(Math.random()-0.5)*6,
-vy:(Math.random()-0.5)*6
-})
-
-}
-
-}
-
-function drawHearts(){
-
-hearts.forEach(h=>{
-
-ctx.font="24px Arial"
-ctx.fillText("❤️",h.x,h.y)
-
-h.x+=h.vx
-h.y+=h.vy
-
-})
-
-requestAnimationFrame(drawHearts)
-
-}
-
-/* PHOTOS */
+/* ФОТО */
 
 const photos=[
 "photo1.jpg",
@@ -227,7 +191,15 @@ function nextPhoto(){
 
 index++
 
-if(index>=photos.length) return
+if(index>=photos.length){
+
+document.getElementById("photoBox").style.display="none"
+
+document.getElementById("love").style.display="block"
+
+return
+
+}
 
 let img=document.getElementById("photo")
 
@@ -240,7 +212,7 @@ img.style.opacity=1
 
 }
 
-/* CLICK GIFT */
+/* НАЖАТИЕ */
 
 document.getElementById("gift").onclick=()=>{
 
@@ -251,10 +223,7 @@ document.getElementById("title").style.display="block"
 document.getElementById("photoBox").style.display="block"
 
 createConfetti()
-createHearts()
-
 drawConfetti()
-drawHearts()
 
 setInterval(nextPhoto,4000)
 
