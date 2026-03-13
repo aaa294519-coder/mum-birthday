@@ -1,217 +1,193 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>С днём рождения, мамуля!</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            background: #ffd9e6;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Arial', sans-serif;
-            padding: 10px;
-        }
-        
-        .container {
-            max-width: 900px;
-            width: 100%;
-            background: white;
-            border-radius: 60px;
-            padding: 25px;
-            text-align: center;
-            box-shadow: 0 10px 30px #ff99bb;
-        }
-        
-        #binary {
-            font-size: 2.5rem;
-            background: #ffe4f0;
-            padding: 20px;
-            border-radius: 50px;
-            margin-bottom: 20px;
-            font-family: monospace;
-            color: #cc3377;
-        }
-        
-        #countdown {
-            font-size: 6rem;
-            color: #ff4d7a;
-            display: none;
-            margin: 20px 0;
-        }
-        
-        .heart {
-            display: none;
-            font-size: 3rem;
-            background: #ffb3c6;
-            padding: 25px;
-            border-radius: 100px;
-            margin: 20px auto;
-            width: fit-content;
-            animation: beat 1s infinite;
-            color: white;
-        }
-        
-        @keyframes beat {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); background: #ff4d6d; }
-        }
-        
-        #message {
-            font-size: 2.2rem;
-            background: #ffc0cb;
-            color: white;
-            padding: 25px;
-            border-radius: 60px;
-            margin: 20px 0;
-            display: none;
-            text-shadow: 2px 2px 0 #ff6f9e;
-        }
-        
-        .photos {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin: 30px 0;
-        }
-        
-        .photos img {
-            width: 250px;
-            height: 300px;
-            object-fit: cover;
-            border-radius: 40px;
-            border: 5px solid white;
-            box-shadow: 0 5px 20px #ff99bb;
-            transition: 0.3s;
-        }
-        
-        .photos img:hover {
-            transform: scale(1.03);
-        }
-        
-        .love {
-            font-size: 2rem;
-            color: #ff2b6d;
-            background: white;
-            padding: 15px 40px;
-            border-radius: 50px;
-            display: inline-block;
-            border: 3px solid #ffb3c6;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div id="binary">0101 1010 0101</div>
-        <div id="countdown"></div>
-        <div class="heart" id="heart">💗 0 1 0 1 💗</div>
-        <div id="message">С днём рождения, мамуля ❤️! Люблю тебя!</div>
-        
-        <div class="photos">
-            <img id="photo1" src="photo1.jpg" alt="photo1" onerror="this.src='https://via.placeholder.com/250x300/ffb6c1/ffffff?text=Фото+1'">
-            <img id="photo2" src="photo2.jpg" alt="photo2" onerror="this.src='https://via.placeholder.com/250x300/ffb6c1/ffffff?text=Фото+2'">
-            <img id="photo3" src="photo3.jpg" alt="photo3" onerror="this.src='https://via.placeholder.com/250x300/ffb6c1/ffffff?text=Фото+3'">
-        </div>
-        
-        <div class="love">❤️ мамуля ❤️</div>
-    </div>
+<meta charset="UTF-8">
+<title>Для мамы ❤️</title>
 
-    <script>
-        // Ждём полной загрузки страницы
-        window.onload = function() {
-            const binary = document.getElementById('binary');
-            const countdown = document.getElementById('countdown');
-            const heart = document.getElementById('heart');
-            const message = document.getElementById('message');
-            const photos = [
-                document.getElementById('photo1'),
-                document.getElementById('photo2'),
-                document.getElementById('photo3')
-            ];
-            
-            // Набор фото для смены
-            const photoList = [
-                'photo1.jpg',
-                'photo2.jpg', 
-                'photo3.jpg'
-            ];
-            
-            let binaryCount = 0;
-            
-            // 1. Текут 0 и 1
-            const binaryTimer = setInterval(() => {
-                let str = '';
-                for(let i = 0; i < 15; i++) {
-                    str += Math.random() < 0.5 ? '0' : '1';
-                }
-                binary.textContent = str;
-                binaryCount++;
-                
-                // Через 2 секунды переходим к отсчёту
-                if(binaryCount > 10) {
-                    clearInterval(binaryTimer);
-                    binary.style.display = 'none';
-                    
-                    // 2. Обратный отсчёт
-                    countdown.style.display = 'block';
-                    let num = 3;
-                    countdown.textContent = num;
-                    
-                    const countTimer = setInterval(() => {
-                        num--;
-                        if(num > 0) {
-                            countdown.textContent = num;
-                        } else {
-                            clearInterval(countTimer);
-                            countdown.style.display = 'none';
-                            
-                            // 3. Показываем сердце
-                            heart.style.display = 'block';
-                            
-                            // 4. Через 3 секунды показываем поздравление и фото
-                            setTimeout(() => {
-                                heart.style.display = 'none';
-                                message.style.display = 'block';
-                                
-                                // Запускаем смену фото
-                                let photoIndex = 0;
-                                setInterval(() => {
-                                    photoIndex = (photoIndex + 1) % photoList.length;
-                                    
-                                    // Меняем все фото одновременно
-                                    photos[0].src = photoList[photoIndex] + '?t=' + Date.now();
-                                    photos[1].src = photoList[(photoIndex + 1) % photoList.length] + '?t=' + Date.now();
-                                    photos[2].src = photoList[(photoIndex + 2) % photoList.length] + '?t=' + Date.now();
-                                }, 4000);
-                                
-                            }, 3000);
-                        }
-                    }, 800);
-                }
-            }, 200);
-            
-            // Сразу запускаем смену фото (но они пока скрыты, но будут менятся когда появятся)
-            // Это чтобы они сразу начали меняться когда появятся
-            setTimeout(() => {
-                let idx = 0;
-                setInterval(() => {
-                    idx = (idx + 1) % photoList.length;
-                    // Обновляем фото с параметром чтобы избежать кэша на гитхабе
-                    photos[0].src = photoList[idx] + '?v=' + Date.now();
-                    photos[1].src = photoList[(idx + 1) % photoList.length] + '?v=' + Date.now();
-                    photos[2].src = photoList[(idx + 2) % photoList.length] + '?v=' + Date.now();
-                }, 4000);
-            }, 5000); // Запускаем через 5 секунд, когда фото уже видны
-        };
-    </script>
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:linear-gradient(135deg,#ff9ecf,#ff6aa6);
+overflow:hidden;
+text-align:center;
+color:white;
+}
+
+/* кнопка */
+
+#start{
+position:absolute;
+top:45%;
+left:50%;
+transform:translate(-50%,-50%);
+font-size:28px;
+padding:20px 40px;
+border:none;
+border-radius:20px;
+background:white;
+color:#ff4fa0;
+cursor:pointer;
+box-shadow:0 10px 30px rgba(0,0,0,0.2);
+}
+
+/* текст */
+
+#title{
+position:absolute;
+top:10%;
+width:100%;
+font-size:42px;
+display:none;
+animation:fade 2s;
+}
+
+@keyframes fade{
+from{opacity:0;transform:translateY(-40px)}
+to{opacity:1}
+}
+
+/* фото */
+
+.photo{
+position:absolute;
+width:260px;
+border-radius:15px;
+box-shadow:0 10px 30px rgba(0,0,0,0.3);
+transform:rotate(-5deg);
+animation:pop 1s;
+}
+
+@keyframes pop{
+from{
+transform:scale(0) rotate(-20deg);
+opacity:0;
+}
+to{
+transform:scale(1) rotate(-5deg);
+opacity:1;
+}
+}
+
+/* canvas */
+
+canvas{
+position:fixed;
+top:0;
+left:0;
+pointer-events:none;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<button id="start">Открыть подарок 🎁</button>
+
+<div id="title">
+С днём рождения, мамуля ❤️!<br>
+Люблю тебя!
+</div>
+
+<canvas id="canvas"></canvas>
+
+<script>
+
+const canvas=document.getElementById("canvas")
+const ctx=canvas.getContext("2d")
+
+canvas.width=window.innerWidth
+canvas.height=window.innerHeight
+
+/* CONFETTI */
+
+let confetti=[]
+
+function createConfetti(){
+
+for(let i=0;i<200;i++){
+
+confetti.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+size:Math.random()*8+3,
+speed:Math.random()*3+2
+})
+
+}
+
+}
+
+function drawConfetti(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height)
+
+confetti.forEach(c=>{
+
+ctx.fillStyle=["#fff","#ff2fa0","#ffd1e8","#ff7db8"][Math.floor(Math.random()*4)]
+
+ctx.fillRect(c.x,c.y,c.size,c.size)
+
+c.y+=c.speed
+
+if(c.y>canvas.height) c.y=0
+
+})
+
+requestAnimationFrame(drawConfetti)
+
+}
+
+/* PHOTO SHOW */
+
+const photos=[
+"photo1.jpg",
+"photo2.jpg",
+"photo3.jpg"
+]
+
+let index=0
+
+function showPhoto(){
+
+const img=document.createElement("img")
+
+img.src=photos[index]
+
+img.className="photo"
+
+img.style.top=Math.random()*70+"%"
+img.style.left=Math.random()*80+"%"
+img.style.transform="rotate("+(Math.random()*20-10)+"deg)"
+
+document.body.appendChild(img)
+
+index++
+if(index>=photos.length) index=0
+
+}
+
+/* START */
+
+document.getElementById("start").onclick=()=>{
+
+document.getElementById("start").style.display="none"
+
+document.getElementById("title").style.display="block"
+
+createConfetti()
+drawConfetti()
+
+showPhoto()
+
+setInterval(showPhoto,4000)
+
+}
+
+</script>
+
 </body>
 </html>
