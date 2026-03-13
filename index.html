@@ -1,40 +1,214 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<title>Для мамы ❤️</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>С днём рождения, мамуля! ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<style>
+        body {
+            background: #ffe6f0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            padding: 15px;
+        }
 
-body{
-margin:0;
-overflow:hidden;
-font-family:Arial;
-background:black;
-color:white;
-text-align:center;
-}
+        .wrapper {
+            max-width: 1000px;
+            width: 100%;
+            background: white;
+            border-radius: 50px 50px 40px 40px;
+            padding: 30px 20px 40px;
+            box-shadow: 0 15px 30px rgba(255, 105, 180, 0.3);
+            text-align: center;
+        }
 
-/* матрица */
-canvas{
-position:fixed;
-top:0;
-left:0;
-z-index:-1;
-}
+        #binary {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: #d44c7a;
+            background: #fff0f5;
+            padding: 20px;
+            border-radius: 50px;
+            margin-bottom: 20px;
+            font-family: 'Courier New', monospace;
+            min-height: 90px;
+        }
 
-/* отсчет */
+        #countdown {
+            font-size: 5rem;
+            font-weight: 900;
+            color: #b03a66;
+            display: none;
+            margin: 10px 0;
+        }
 
-#count{
-font-size:120px;
-margin-top:20vh;
-}
+        .heart-box {
+            display: none;
+            justify-content: center;
+            margin: 15px 0;
+        }
 
-/* сердце */
+        .heart {
+            background: #ffc0cb;
+            padding: 20px 35px;
+            border-radius: 80px;
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: #b32d5e;
+            box-shadow: 0 0 0 8px white, 0 0 0 12px #ff99bb;
+            animation: pulse 1.4s infinite;
+        }
 
-#heart{
-font-size:120px;
-display:none;
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+
+        .greeting {
+            font-size: 2.3rem;
+            font-weight: bold;
+            color: #c2185b;
+            background: #ffe4ec;
+            padding: 25px 15px;
+            border-radius: 60px;
+            margin: 25px 0;
+            display: none;
+            border: 3px solid white;
+        }
+
+        .photos {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin: 30px 0 20px;
+        }
+
+        .photo {
+            flex: 1 1 250px;
+            max-width: 300px;
+            background: #ffdbeb;
+            padding: 15px;
+            border-radius: 40px 40px 20px 20px;
+        }
+
+        .photo img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 30px;
+            border: 4px solid white;
+            display: block;
+        }
+
+        .footer {
+            background: #ff9eb5;
+            color: white;
+            font-size: 2rem;
+            padding: 15px 30px;
+            border-radius: 50px;
+            display: inline-block;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div id="binary">01 10 01 10</div>
+        <div id="countdown"></div>
+        <div class="heart-box" id="heartBox">
+            <div class="heart">0 1 1 ♥ 0 1 0</div>
+        </div>
+        <div class="greeting" id="greeting">С днём рождения, мамуля ❤️! Люблю тебя!</div>
+        <div class="photos">
+            <div class="photo"><img id="photo1" src="photo1.jpg" alt="фото1"></div>
+            <div class="photo"><img id="photo2" src="photo2.jpg" alt="фото2"></div>
+            <div class="photo"><img id="photo3" src="photo3.jpg" alt="фото3"></div>
+        </div>
+        <div class="footer">❤️ мамуля ❤️</div>
+    </div>
+
+    <script>
+        let step = 0;
+        const binaryDiv = document.getElementById('binary');
+        const countdownDiv = document.getElementById('countdown');
+        const heartBox = document.getElementById('heartBox');
+        const greeting = document.getElementById('greeting');
+        const photos = [
+            document.getElementById('photo1'),
+            document.getElementById('photo2'),
+            document.getElementById('photo3')
+        ];
+
+        const images = [
+            'photo1.jpg',
+            'photo2.jpg',
+            'photo3.jpg'
+        ];
+
+        // показываем бегущие 0 и 1
+        const binaryStream = setInterval(() => {
+            let text = '';
+            for (let i = 0; i < 12; i++) {
+                text += Math.random() > 0.5 ? '0' : '1';
+                if (i % 3 === 2) text += ' ';
+            }
+            binaryDiv.textContent = text;
+            step++;
+
+            if (step > 10) {
+                clearInterval(binaryStream);
+                binaryDiv.style.display = 'none';
+                startCountdown();
+            }
+        }, 200);
+
+        function startCountdown() {
+            countdownDiv.style.display = 'block';
+            let count = 3;
+            countdownDiv.textContent = count;
+
+            const timer = setInterval(() => {
+                count--;
+                if (count > 0) {
+                    countdownDiv.textContent = count;
+                } else {
+                    clearInterval(timer);
+                    countdownDiv.style.display = 'none';
+                    heartBox.style.display = 'flex';
+
+                    setTimeout(() => {
+                        heartBox.style.display = 'none';
+                        greeting.style.display = 'block';
+                        startPhotoRotation();
+                    }, 3500);
+                }
+            }, 800);
+        }
+
+        function startPhotoRotation() {
+            let index = 0;
+            const updatePhotos = () => {
+                photos[0].src = images[index % 3];
+                photos[1].src = images[(index + 1) % 3];
+                photos[2].src = images[(index + 2) % 3];
+                index++;
+            };
+            updatePhotos();
+            setInterval(updatePhotos, 4000);
+        }
+    </script>
+</body>
+</html>display:none;
 animation:pulse 1s infinite;
 }
 
