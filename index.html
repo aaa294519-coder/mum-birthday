@@ -249,7 +249,7 @@ document.getElementById("photo").src=photos[index]
 /* КЛИК */
 
 document.getElementById("gift").onclick=()=>{
-
+document.getElementById("music").play()
 document.getElementById("gift").style.display="none"
 document.getElementById("hint").style.display="none"
 
@@ -264,6 +264,7 @@ photoTimer=setInterval(nextPhoto,2500)
 }
 
 </script>
-
+  
+<audio id="music" src="music.mp3"></audio>
 </body>
 </html>
