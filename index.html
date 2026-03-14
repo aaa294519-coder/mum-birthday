@@ -14,7 +14,7 @@ overflow:hidden;
 text-align:center;
 }
 
-/* ШАРИКИ */
+/* шарики */
 
 #balloons{
 position:fixed;
@@ -33,15 +33,11 @@ opacity:0.8;
 }
 
 @keyframes float{
-from{
-transform:translateY(0);
-}
-to{
-transform:translateY(-120vh);
-}
+from{transform:translateY(0)}
+to{transform:translateY(-120vh)}
 }
 
-/* CANVAS */
+/* canvas */
 
 canvas{
 position:fixed;
@@ -51,7 +47,7 @@ z-index:1;
 pointer-events:none;
 }
 
-/* ТЕКСТ */
+/* текст */
 
 #hint{
 position:absolute;
@@ -84,7 +80,7 @@ display:none;
 z-index:3;
 }
 
-/* ПОДАРОК */
+/* подарок */
 
 #gift{
 position:absolute;
@@ -105,7 +101,7 @@ animation:shake 2s infinite;
 100%{transform:translate(-50%,-50%) rotate(0)}
 }
 
-/* ФОТО */
+/* фото */
 
 #photoBox{
 position:absolute;
@@ -149,11 +145,13 @@ box-shadow:0 20px 50px rgba(0,0,0,0.4);
 <img id="photo" src="photo1.jpg">
 </div>
 
+<audio id="music" src="music.mp3"></audio>
+
 <canvas id="canvas"></canvas>
 
 <script>
 
-/* СОЗДАЕМ ШАРИКИ */
+/* шарики */
 
 const balloonBox=document.getElementById("balloons")
 
@@ -171,7 +169,7 @@ balloonBox.appendChild(b)
 
 }
 
-/* CONFETTI */
+/* конфетти */
 
 const canvas=document.getElementById("canvas")
 const ctx=canvas.getContext("2d")
@@ -216,7 +214,7 @@ requestAnimationFrame(drawConfetti)
 
 }
 
-/* ФОТО */
+/* фото */
 
 const photos=[
 "photo1.jpg",
@@ -246,15 +244,21 @@ document.getElementById("photo").src=photos[index]
 
 }
 
-/* КЛИК */
+/* клик по подарку */
 
 document.getElementById("gift").onclick=()=>{
-document.getElementById("music").play()
+
 document.getElementById("gift").style.display="none"
 document.getElementById("hint").style.display="none"
 
 document.getElementById("title").style.display="block"
 document.getElementById("photoBox").style.display="block"
+
+/* запуск музыки */
+
+const music=document.getElementById("music")
+music.volume=0.7
+music.play()
 
 createConfetti()
 drawConfetti()
@@ -264,7 +268,6 @@ photoTimer=setInterval(nextPhoto,2500)
 }
 
 </script>
-  
-<audio id="music" src="music.mp3"></audio>
+
 </body>
 </html>
